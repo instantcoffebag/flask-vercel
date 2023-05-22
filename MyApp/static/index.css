@@ -1,0 +1,173 @@
+*
+{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+body
+{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	background: rgb(255, 245, 220);
+}
+.container
+{
+	position: relative;
+	width: 1000px;
+	height: 900px;
+	background: rgb(255, 255, 255);
+	overflow: hidden;
+}
+header
+{
+	position: relative;
+	background: rgb(0, 156, 127);
+	padding: 20px, 10px;
+	display: flex;
+}
+header .logo
+{
+	color: rgb(255, 255, 255);
+	font-family: monaco, Courier, monospace;
+	text-align: center;
+	text-decoration: none;
+	font-weight: 600;
+	font-size: 1.1em;
+}
+.signOut
+{
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+.sign_out
+{
+  margin-left: auto;
+  margin-right: 0;
+  position: relative;
+}
+.buttons
+{
+	position: relative;
+	display: flex;
+	background: rgb(0, 156, 127);
+	border-botton: 1px solid rbg(0,0,0)
+}
+.buttons label
+{
+	width: 33.3%;
+	color: rgb(255, 255, 255);
+	opacity: 0.75;
+	text-align: center;
+	padding: 5px 0;
+	cursor: pointer;
+}
+.tabs input:nth-child(1):checked ~ .buttons label:nth-child(1),
+.tabs input:nth-child(2):checked ~ .buttons label:nth-child(2),
+.tabs input:nth-child(3):checked ~ .buttons label:nth-child(3)
+{
+	opacity: 1;
+}
+.content
+{
+	position: relative;
+	width: calc(1000px * 3);
+	display: flex;
+	transition: 0.5s;
+	overflow: hidden;
+}
+.content .box
+{
+	position: relative;
+	width: 1000px;
+}
+.tabs input:nth-child(1):checked ~ .content
+{
+	left: calc(1000px * 0);
+}
+.tabs input:nth-child(2):checked ~ .content
+{
+	left: calc(1000px * -1);
+}
+.tabs input:nth-child(3):checked ~ .content
+{
+	left: calc(1000px * -2);
+}
+.content .data
+{
+	position: relative;
+	width: 1000px;
+	height: 510px;
+}
+
+.chatlist
+{
+	position: relative;
+	height: 100%;
+	overflow-y: auto;
+}
+
+.chatlist .block
+{
+	position: relative;
+	display: flex;
+	width: 100%;
+	gap: 10px;
+	padding: 15px, 10px;
+	cursor: pointer;
+}
+.chatlist .block:hover
+{
+	background: rgb(238, 234, 255);
+}
+a
+{
+  text-decoration: none;
+  font-size: 1.3em;
+}
+.box h1
+{
+    text-align: center;
+    padding-top: 50px;
+    font-family: Verdana, Helvetica, sans-serif;
+    font-size: 2.5em;
+    color: rgba(255, 99, 71, 0.6);
+}
+.box .form
+{
+    display: block;
+    text-align: center;
+}
+form
+{
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+}
+.box input[type=text]
+{
+  width: 100%;
+  padding: 10px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+}
+.button {
+  background-color: rgb(0, 156, 127);
+  border: none;
+  color: white;
+  padding: 8px 5px;
+  text-align: center;
+  font-size: 0.9em;
+  margin: 4px 2px;
+  opacity: 0.6;
+  transition: 0.3s;
+  display: inline-block;
+  text-decoration: none;
+  cursor: pointer;
+}
+.button:hover {opacity: 1}

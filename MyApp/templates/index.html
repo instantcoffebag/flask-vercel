@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial scale=1">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='index.css') }}">
+</head>
+
+<body>
+	<div class="container">
+		<header>
+			<div class="logo">hello {{dict.name}}</div>
+			<div class="sign_out">
+				<form action="signOut">
+					<button class="signOut">sign out</button>
+				</form>
+			</div>
+		</header>
+		<div class = "tabs">
+			<input id="chats" type="radio" name="group" style="visibility: hidden; display:none;">
+			<input id="create" type="radio" name="group" style="visibility: hidden; display:none;">
+			<input id="join" type="radio" name="group" style="visibility: hidden; display:none;">
+
+			<div class="buttons">
+				<label for="chats">chats</label>
+				<label for="create">create a new room</label>
+				<label for="join">join a new room</label>
+			</div>
+
+			<div class="content">
+				<div class="data">
+					<div class="chatlist">
+						{% if dict.amount_rooms == 0: %}
+							<h1>it seems that you are not in any chat rooms</h1>
+						{% else %}
+							{%for room in dict.rooms%}
+    						<div class="block">
+								<a href="{{ url_for('chat',name=dict.name, room=room, roomId=dict['ids'][loop.index0])}}">{{ room }}</a>
+							</div>
+							{%endfor%}
+						{% endif %}
+					</div>
+				</div>
+
+				<div class="box create">
+					<h1>choose a name for your room</h1>
+					<div class="form">
+						<form autocomplete="off" action="create" method="post">
+							<input type="text" placeholder="room name" name="room" required />
+							<input id="dict" name="dict" type="hidden" value="none">
+							<script>
+								var dic = "{{dict.name}},{{dict.email}},{{dict.passw}},{{dict.amount_rooms}}";
+								var rooms = "{{dict.rooms}}";
+								rooms = rooms.slice(2, -1);
+								rooms = rooms.split(",");
+								rooms.forEach(myFunction);
+								function myFunction(value)
+								{
+									dic = dic + "," + value;
+								}
+								document.getElementById("dict").value = dic;
+							</script>
+							<button name="createRoom" class="button">submit</button>
+							<br>
+							<span style="color: red;">{{ message }}</span>
+						</form>
+					</div>
+				</div>
+
+				<div class="box join">
+					<h1>enter the code you were sent to join the room</h1>
+					<div class="form">
+						<form autocomplete="off" action="join" method="post">
+							<input type="text" placeholder="code" name="roomId" required />
+							<input id="dictionary" name="dict" type="hidden" value="none">
+							<script>
+								var dic = "{{dict.name}},{{dict.email}},{{dict.passw}},{{dict.amount_rooms}}";
+								var rooms = "{{dict.rooms}}";
+								rooms = rooms.slice(2, -1);
+								rooms = rooms.split(",");
+								rooms.forEach(myFunction);
+								function myFunction(value)
+								{
+									dic = dic + "," + value;
+								}
+								document.getElementById("dictionary").value = dic;
+							</script>
+							<button name="entername" class="button">submit</button>
+							<span style="color: red;">{{ msg }}</span>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

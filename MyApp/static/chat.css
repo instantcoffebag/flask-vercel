@@ -1,0 +1,90 @@
+*
+{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+body
+{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	background: rgb(255, 245, 220);
+}
+.container
+{
+	position: relative;
+	width: 1000px;
+	height: 800px;
+	background: rgb(255, 255, 255);
+	overflow: hidden;
+}
+header
+{
+	position: relative;
+	background: rgb(0, 156, 127);
+	padding-top: 10px;
+	padding-bottom: 10px;
+	display: flex;
+	align-items: center;
+}
+.users
+{
+  margin-left: auto;
+  margin-right: 0;
+  position: relative;
+  display: inline-block;
+}
+.admin
+{
+  margin-left: auto;
+  margin-right: ;
+  position: relative;
+  display: inline-block;
+}
+.dropbtn
+{
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+.dropdown-content
+{
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  overflow: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  right: 0;
+  z-index: 1;
+}
+.dropdown-content a
+{
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+.show {display: block;}
+
+header h1
+{
+	color: rgb(255, 255, 255);
+	font-family: monaco, Courier, monospace;
+	text-align: center;
+	text-decoration: none;
+	font-weight: 600;
+	font-size: 1.1em;
+}
+.messagebox
+{
+	position: relative;
+	padding: 20px;
+	height: 500px;
+	background: rgb(255, 255, 255);
+	border-radius: 10px;
+}

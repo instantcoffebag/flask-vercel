@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial scale=1">
+    <title>chat room {{room}} </title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='chat.css') }}">
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>{{ room }}</h1>
+        {% if dict.admin == "True": %}
+            <div class="admin">
+                <button onclick="admin()" class="dropbtn">admin actions</button>
+                <div id="admin" class="dropdown-content">
+                    <a href="{{ url_for('chat',name='delete', room=room, roomId=roomId)}}">delete room</a>
+                </div>
+            </div>
+        {% endif %}
+        <div class="users">
+            <button onclick="users()" class="dropbtn">view participants</button>
+            <div id="users" class="dropdown-content">
+                {%for user in dict.users%}
+                <p>{{user}}</p>
+                {%endfor%}
+            </div>
+        </div>
+        <script>
+            function admin()
+            {
+                var btnid = "admin"
+                myFunction(btnid);
+            }
+            function users()
+            {
+                var btnid = "users"
+                myFunction(btnid);
+            }
+
+            /* When the user clicks on the button,
+            toggle between hiding and showing the dropdown content */
+            function myFunction(btnid) {
+              document.getElementById(btnid).classList.toggle("show");
+            }
+            // Close the dropdown if the user clicks outside of it
+            window.onclick = function(event) {
+              if (!event.target.matches('.dropbtn')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                var i;
+                for (i = 0; i < dropdowns.length; i++) {
+                  var openDropdown = dropdowns[i];
+                  if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                  }
+                }
+              }
+            }
+        </script>
+    </header>
+<div class="messagebox">
+    <div id="messages">
+        {%for msg in dict.messages%}
+            <p>{{msg.username}}: {{msg.message}}</p>
+        {%endfor%}
+    </div>
+</div>
+<form autocomplete="off" id="message_input_form">
+    <input type="text" id="message_input" placeholder="say something">
+    <button type="submit">send</button>
+</form>
+
+<!-- implements javascript's socketio in client side-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.js"></script>
+<!-- implements firebase MyApp and database-->
+<script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-database.js"></script>
+<script type="text/javascript" charset="utf-8">
+    const firebaseConfig =
+    {
+        apiKey: "AIzaSyDOTg1HlOHMzRf47ze3OIIVBrZhIhNz7kY",
+        authDomain: "dafnaproject-bcf0f.firebaseapp.com",
+        databaseURL: "https://dafnaproject-bcf0f-default-rtdb.firebaseio.com",
+        projectId: "dafnaproject-bcf0f",
+        storageBucket: "dafnaproject-bcf0f.appspot.com",
+        messagingSenderId: "421301903325",
+        appId: "1:421301903325:web:1b97dda7245ab26b742034",
+        measurementId: "G-5KBLBJ6N1Q"
+    };
+    firebase.initializeApp(firebaseConfig);
+    var db = firebase.database()
+
+    /* creates a socket and connects it to the server address */
+    var socket = io.connect("http://127.0.0.1:5000/");
+
+    /* when the socket connects it send the server at the event 'join_room' the nickname and roomId*/
+    socket.on('connect', function ()
+    {
+        socket.emit('joinroom', {nickname: "{{nickname}}", roomId: "{{roomId}}"});
+    })
+
+    let message_input = document.getElementById('message_input');
+    document.getElementById('message_input_form').onsubmit = function(e)
+    {
+            e.preventDefault();
+            let message = message_input.value.trim();
+
+            if (message.length)
+            {
+                socket.emit('send_message', {nickname: "{{ nickname }}", roomId: "{{ roomId }}", message: message})
+            }
+            message_input.value = '';
+            message_input.focus();
+    }
+    socket.on('receive_message', function(data)
+    {
+        const newNode = document.createElement('div');
+        newNode.innerHTML = `<b>${data.nickname}:&nbsp;</b> ${data.message}`;
+        document.getElementById('messages').appendChild(newNode);
+    });
+
+    function leave()
+    {
+        socket.emit('leave_room', {nickname: "{{ nickname }}", roomId: "{{ roomId }}"});
+    }
+</script>
+</div>
+</body>
+</html>
